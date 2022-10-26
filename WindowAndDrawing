@@ -1,0 +1,54 @@
+import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
+public class WindowAndDrawing {
+    JTextPane jTextPane;
+    JPanel jPanel;
+    JFrame frame = new JFrame("Snake");
+    void newjTextPane() {
+        jTextPane = new JTextPane();
+        jPanel = new JPanel();
+        jPanel.add(jTextPane);
+        frame.add(jPanel);
+    }
+    WindowAndDrawing () {
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setVisible(true);
+        jTextPane = new JTextPane();
+        jTextPane.setEditable(false);
+        jPanel = new JPanel();
+        jPanel.add(jTextPane);
+        frame.add(jPanel);
+        frame.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                Main.game.setKey(e.getKeyCode());
+            }
+            @Override public void keyReleased(KeyEvent e) {}});
+    }
+    void appendToPane(JTextPane tp, String msg, Color c)
+    {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+
+        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Lucida Console");
+        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+
+        int len = tp.getDocument().getLength();
+        tp.setCaretPosition(len);
+        tp.setCharacterAttributes(aset, false);
+        tp.replaceSelection(msg);
+    }
+}
