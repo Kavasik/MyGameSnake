@@ -1,0 +1,28 @@
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Objects;
+
+public class Map {
+private final String[][] field = new String[15][35];
+Map () {
+    Main.window.newjTextPane();
+    for (String[] strings : field) {
+        Arrays.fill(strings, "a");
+    }
+}
+void MapDraw() {
+    Main.window.newjTextPane();
+    for (int x = 0; x < field.length; x++) {
+        for (int y = 0; y < field[x].length; y++) {
+            if (x == 0 || x == 14 || y == 0|| y == 34) Main.window.appendToPane(Main.window.jTextPane,field[x][y], Color.BLACK);
+           else if (Objects.equals(field[x][y], "o") || Objects.equals(field[x][y], "q") )Main.window.appendToPane(Main.window.jTextPane,field[x][y], Color.BLACK);
+            else Main.window.appendToPane(Main.window.jTextPane,field[x][y], Color.WHITE);
+        }
+        Main.window.appendToPane(Main.window.jTextPane,"\n", Color.WHITE);
+    }
+}
+void setElementField (int x, int y, String symbol) {
+    field[x][y] = symbol;
+}
+String getElementField (int x,int y) { return field[x][y]; }
+}
