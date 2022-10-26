@@ -1,0 +1,13 @@
+public class ElementBody {
+    int b,g;
+    int Count;
+    ElementBody (int h, int k, int Count) {
+        b = h;
+        g = k;
+        this.Count = Count;
+    }
+    //Если переданная переменная Count равна 0, то заменяем переданные координаты на символ "а".
+    void DeleteElement () {
+        if (Count == 0) Main.map.setElementField(b,g, "a");
+    }
+}
