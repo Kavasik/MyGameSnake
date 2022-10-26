@@ -1,0 +1,30 @@
+public class Snake {
+    private int LenghtSnake = 3;
+    private int g = 18, b = 7;
+    private ElementBody[] ElementsBodies = new ElementBody[LenghtSnake];
+    void IncreaseLenghtSnake() {LenghtSnake++;}
+    void setG(int g1) {g = g1;}
+    void setB(int b1) {b = b1;}
+    int getG() {return g;}
+    int getB() {return b;}
+    void addElementSnake () {
+        ElementBody[] abema = new ElementBody[ElementsBodies.length];
+        System.arraycopy(ElementsBodies, 0, abema, 0, ElementsBodies.length);
+        ElementsBodies = new ElementBody[abema.length + 1];
+        System.arraycopy(abema, 0, ElementsBodies, 0, abema.length);
+        Main.map.setElementField(b, g, "o");
+        for (int i = 0; i < ElementsBodies.length; i++){
+            if (ElementsBodies[i] == null) {
+                ElementsBodies[i] = new ElementBody(b,g,LenghtSnake);
+                break;
+            }
+        }
+        for (ElementBody element : ElementsBodies) {
+            if (element == null) break;
+            else {
+                element.Count--;
+                element.DeleteElement();
+            }
+        }
+    }
+}
