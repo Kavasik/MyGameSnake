@@ -1,35 +1,89 @@
-public class Snake {
+import java.util.Objects;
+
+public class Game {
+    WindowAndDrawing windowAndDrawing;
     Map map;
-    Snake (Map map) {
-        this.map = map;
+    Snake snake;
+    private int Key;
+    private int b1,g1;
+    void setKey(int key) {
+        switch (key) {
+            case 37: if(Key == 39) return; else Key = key; break;
+            case 38: if(Key == 40) return; else Key = key; break;
+            case 39: if(Key == 37) return; else Key = key; break;
+            case 40: if(Key == 38) return; else Key = key; break;
+        }
     }
-    private int LenghtSnake = 3;
-    private int g = 18, b = 7;
-    private ElementBody[] ElementsBodies = new ElementBody[LenghtSnake];
-    void IncreaseLenghtSnake() {LenghtSnake++;}
-    void setG(int g1) {g = g1;}
-    void setB(int b1) {b = b1;}
-    int getG() {return g;}
-    int getB() {return b;}
-    void addElementSnake () {
-        ElementBody[] abema = new ElementBody[ElementsBodies.length];
-        System.arraycopy(ElementsBodies, 0, abema, 0, ElementsBodies.length);
-        ElementsBodies = new ElementBody[abema.length + 1];
-        System.arraycopy(abema, 0, ElementsBodies, 0, abema.length);
-        map.setElementField(b, g, "o");
-        for (int i = 0; i < ElementsBodies.length; i++){
-            if (ElementsBodies[i] == null) {
-                ElementsBodies[i] = new ElementBody(b,g,LenghtSnake);
-                break;
+boolean SnakePositionCheck () {
+    if (snake.getB() == 0 || snake.getB() == 14) return false;
+    return snake.getG() > 1 && snake.getG() < 33;
+}
+void start() {
+        while (true) {
+            windowAndDrawing = new WindowAndDrawing();
+            map = new Map(windowAndDrawing);
+            snake = new Snake(map);
+            while (SnakePositionCheck()) {
+                setKey(windowAndDrawing.getKey());
+                try {
+                    switch (Key) {
+                        case 37 -> left();
+                        case 38 -> up();
+                        case 39 -> right();
+                        case 40 -> down();
+                    }
+
+                } catch (Throwable exc) {
+                    return;
+                }
+                snake.addElementSnake();
+                Apple();
+                map.MapDraw();
+                try {
+                    Thread.sleep(500);
+                } catch (Throwable exc) {
+                    System.out.println("Ooooops, we have the problem)");
+                }
+            }
+            windowAndDrawing.EndSplashScreen();
+        }
+}
+
+    void left () throws Throwable {
+        if (Objects.equals(map.getElementField(snake.getB(),snake.getG() - 2), "o")) throw new Throwable();
+        snake.setG(snake.getG() - 2);
+    }
+    void right () throws Throwable {
+        if (Objects.equals(map.getElementField(snake.getB(),snake.getG() + 2), "o")) throw new Throwable();
+        snake.setG(snake.getG() + 2);
+    }
+    void up () throws Throwable {
+        if (Objects.equals(map.getElementField(snake.getB() - 1,snake.getG()), "o")) throw new Throwable();
+        snake.setB(snake.getB() - 1);
+    }
+    void down () throws Throwable {
+        if (Objects.equals(map.getElementField(snake.getB() + 1,snake.getG()), "o")) throw new Throwable();
+        snake.setB(snake.getB() + 1);
+    }
+    boolean CheckApple = true;
+    void Apple () {
+        if (CheckApple) {
+            CheckApple = false;
+            while (true){
+                b1 = 2 + (int) (Math.random() * 12);
+                g1 = 2 + (int) (Math.random() * 32);
+                if (!Objects.equals(map.getElementField(b1,g1), "o")) {
+                    if ((g1 % 2) == 0) {
+                        map.setElementField(b1, g1, "q");
+                        break;
+                    }
+                }
             }
         }
-        for (ElementBody element : ElementsBodies) {
-            if (element == null) break;
-            else {
-                element.Count--;
-                if (element.DeleteElement()) {
-                    map.setElementField(element.b, element.g,"a");
-                }
+        if (!CheckApple) {
+            if (snake.getB() == b1 && snake.getG() == g1) {
+                CheckApple = true;
+                snake.IncreaseLenghtSnake();
             }
         }
     }
