@@ -1,22 +1,5 @@
-import java.util.Objects;
-import java.util.Scanner;
-
 public class Main {
-    static WindowAndDrawing window;
-    static Map map;
-    static Game game;
     public static void main (String... args) {
-        Scanner s = new Scanner(System.in);
-        String g;
-        do {
-            window = new WindowAndDrawing();
-            map = new Map();
-            game = new Game();
-            game.start();
-            window.frame.setVisible(false);
-            System.out.println("Введите символ чтобы продолжить, или 'GIT', чтобы закончить.");
-            g = s.next();
-            if (Objects.equals(g, "GIT")) System.exit(-1);
-        }while (true);
+        new Game().start();
     }
 }
