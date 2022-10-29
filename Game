@@ -1,8 +1,10 @@
 import java.util.Objects;
 
 public class Game {
-    Snake snake = new Snake();
-    private int Key = 38;
+    WindowAndDrawing windowAndDrawing;
+    Map map;
+    Snake snake;
+    private int Key;
     private int b1,g1;
     void setKey(int key) {
         switch (key) {
@@ -17,46 +19,50 @@ boolean SnakePositionCheck () {
     return snake.getG() > 1 && snake.getG() < 33;
 }
 void start() {
-while (SnakePositionCheck()) {
-try {
-    switch (Key) {
-        case 37 -> left();
-        case 38 -> up();
-        case 39 -> right();
-        case 40 -> down();
-    }
+        while (true) {
+            windowAndDrawing = new WindowAndDrawing();
+            map = new Map(windowAndDrawing);
+            snake = new Snake(map);
+            while (SnakePositionCheck()) {
+                setKey(windowAndDrawing.getKey());
+                try {
+                    switch (Key) {
+                        case 37 -> left();
+                        case 38 -> up();
+                        case 39 -> right();
+                        case 40 -> down();
+                    }
 
-}
-catch (Throwable exc) {
-    System.out.println("You looser!");
-    return;
-}
-snake.addElementSnake();
-Apple();
-Main.map.MapDraw();
-try {
-    Thread.sleep(650);
-}
-catch (Throwable exc) {
-    System.out.println("Ooooops, we have the problem)");
-}
-}
+                } catch (Throwable exc) {
+                    return;
+                }
+                snake.addElementSnake();
+                Apple();
+                map.MapDraw();
+                try {
+                    Thread.sleep(500);
+                } catch (Throwable exc) {
+                    System.out.println("Ooooops, we have the problem)");
+                }
+            }
+            windowAndDrawing.EndSplashScreen();
+        }
 }
 
     void left () throws Throwable {
-        if (Objects.equals(Main.map.getElementField(snake.getB(),snake.getG() - 2), "o")) throw new Throwable();
+        if (Objects.equals(map.getElementField(snake.getB(),snake.getG() - 2), "o")) throw new Throwable();
         snake.setG(snake.getG() - 2);
     }
     void right () throws Throwable {
-        if (Objects.equals(Main.map.getElementField(snake.getB(),snake.getG() + 2), "o")) throw new Throwable();
+        if (Objects.equals(map.getElementField(snake.getB(),snake.getG() + 2), "o")) throw new Throwable();
         snake.setG(snake.getG() + 2);
     }
     void up () throws Throwable {
-        if (Objects.equals(Main.map.getElementField(snake.getB() - 1,snake.getG()), "o")) throw new Throwable();
+        if (Objects.equals(map.getElementField(snake.getB() - 1,snake.getG()), "o")) throw new Throwable();
         snake.setB(snake.getB() - 1);
     }
     void down () throws Throwable {
-        if (Objects.equals(Main.map.getElementField(snake.getB() + 1,snake.getG()), "o")) throw new Throwable();
+        if (Objects.equals(map.getElementField(snake.getB() + 1,snake.getG()), "o")) throw new Throwable();
         snake.setB(snake.getB() + 1);
     }
     boolean CheckApple = true;
@@ -66,9 +72,9 @@ catch (Throwable exc) {
             while (true){
                 b1 = 2 + (int) (Math.random() * 12);
                 g1 = 2 + (int) (Math.random() * 32);
-                if (!Objects.equals(Main.map.getElementField(b1,g1), "o")) {
+                if (!Objects.equals(map.getElementField(b1,g1), "o")) {
                     if ((g1 % 2) == 0) {
-                        Main.map.setElementField(b1, g1, "q");
+                        map.setElementField(b1, g1, "q");
                         break;
                     }
                 }
