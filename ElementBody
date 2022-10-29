@@ -6,8 +6,7 @@ public class ElementBody {
         g = k;
         this.Count = Count;
     }
-    //Если переданная переменная Count равна 0, то заменяем переданные координаты на символ "а".
-    void DeleteElement () {
-        if (Count == 0) Main.map.setElementField(b,g, "a");
+    boolean DeleteElement () {
+        return Count == 0;
     }
 }
