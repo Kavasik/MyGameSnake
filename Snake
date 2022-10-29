@@ -1,4 +1,8 @@
 public class Snake {
+    Map map;
+    Snake (Map map) {
+        this.map = map;
+    }
     private int LenghtSnake = 3;
     private int g = 18, b = 7;
     private ElementBody[] ElementsBodies = new ElementBody[LenghtSnake];
@@ -12,7 +16,7 @@ public class Snake {
         System.arraycopy(ElementsBodies, 0, abema, 0, ElementsBodies.length);
         ElementsBodies = new ElementBody[abema.length + 1];
         System.arraycopy(abema, 0, ElementsBodies, 0, abema.length);
-        Main.map.setElementField(b, g, "o");
+        map.setElementField(b, g, "o");
         for (int i = 0; i < ElementsBodies.length; i++){
             if (ElementsBodies[i] == null) {
                 ElementsBodies[i] = new ElementBody(b,g,LenghtSnake);
@@ -23,7 +27,9 @@ public class Snake {
             if (element == null) break;
             else {
                 element.Count--;
-                element.DeleteElement();
+                if (element.DeleteElement()) {
+                    map.setElementField(element.b, element.g,"a");
+                }
             }
         }
     }
