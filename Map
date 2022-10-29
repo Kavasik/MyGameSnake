@@ -27,4 +27,8 @@ void setElementField (int x, int y, String symbol) {
     field[x][y] = symbol;
 }
 String getElementField (int x,int y) { return field[x][y]; }
+    int getLenghtField (int index) {
+    if (index == -1) return field.length;
+    else return field[index].length;
+    }
 }
