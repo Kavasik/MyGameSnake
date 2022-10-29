@@ -3,34 +3,26 @@ public class Snake {
     Snake (Map map) {
         this.map = map;
     }
-    private int LenghtSnake = 3;
+    private int LenghtSnake = 0;
     private int g = 18, b = 7;
-    private ElementBody[] ElementsBodies = new ElementBody[LenghtSnake];
-    void IncreaseLenghtSnake() {LenghtSnake++;}
+    private ElementBody[] ElementsBodies = new ElementBody[1];
     void setG(int g1) {g = g1;}
     void setB(int b1) {b = b1;}
     int getG() {return g;}
     int getB() {return b;}
-    void addElementSnake () {
-        ElementBody[] abema = new ElementBody[ElementsBodies.length];
-        System.arraycopy(ElementsBodies, 0, abema, 0, ElementsBodies.length);
-        ElementsBodies = new ElementBody[abema.length + 1];
-        System.arraycopy(abema, 0, ElementsBodies, 0, abema.length);
-        map.setElementField(b, g, "o");
-        for (int i = 0; i < ElementsBodies.length; i++){
-            if (ElementsBodies[i] == null) {
-                ElementsBodies[i] = new ElementBody(b,g,LenghtSnake);
-                break;
-            }
-        }
-        for (ElementBody element : ElementsBodies) {
-            if (element == null) break;
-            else {
-                element.Count--;
-                if (element.DeleteElement()) {
-                    map.setElementField(element.b, element.g,"a");
-                }
-            }
-        }
-    }
+   void MoveTheSnake () {
+        if (LenghtSnake >= ElementsBodies.length) LenghtSnake = 0;
+        if (ElementsBodies[LenghtSnake] == null) ElementsBodies[LenghtSnake] = new ElementBody(b,g);
+        map.setElementField(ElementsBodies[LenghtSnake].b,ElementsBodies[LenghtSnake].g,"a");
+       ElementsBodies[LenghtSnake].b = b;
+       ElementsBodies[LenghtSnake].g = g;
+       map.setElementField(ElementsBodies[LenghtSnake].b,ElementsBodies[LenghtSnake].g,"o");
+       LenghtSnake++;
+   }
+   void addElementSnake () {
+        ElementBody[] x = new ElementBody[ElementsBodies.length];
+       System.arraycopy(ElementsBodies, 0, x, 0, ElementsBodies.length);
+        ElementsBodies = new ElementBody[x.length + 1];
+       System.arraycopy(x,0,ElementsBodies,0,x.length);
+   }
 }
