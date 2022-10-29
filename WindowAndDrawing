@@ -11,9 +11,9 @@ import java.awt.event.KeyListener;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class WindowAndDrawing {
-    private int Key = 38;
-    int getKey () {
-        return Key;
+    private final int[] Key = new int[] {0, 38};
+    int getKey (int index) {
+        return Key[index];
     }
     JTextPane jTextPane;
     JPanel jPanel;
@@ -38,7 +38,8 @@ public class WindowAndDrawing {
             public void keyTyped(KeyEvent e) {}
             @Override
             public void keyPressed(KeyEvent e) {
-                Key = e.getKeyCode();
+                Key[0] = Key[1];
+                Key[1] = e.getKeyCode();
             }
             @Override public void keyReleased(KeyEvent e) {}});
     }
