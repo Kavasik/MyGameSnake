@@ -55,25 +55,21 @@ void start() {
         if (Objects.equals(map.getElementField(snake.getB() + 1,snake.getG()), "o")) throw new Throwable();
         snake.setB(snake.getB() + 1);
     }
-    boolean CheckApple = true;
     void Apple () {
-        if (CheckApple) {
-            CheckApple = false;
-            while (true){
-                b1 = 2 + (int) (Math.random() * 12);
-                g1 = 2 + (int) (Math.random() * 32);
-                if (!Objects.equals(map.getElementField(b1,g1), "o")) {
-                    if ((g1 % 2) == 0) {
-                        map.setElementField(b1, g1, "q");
-                        break;
-                    }
-                }
+        for (int x = 0; x < map.getLenghtField(-1); x++) {
+            for (int y = 0; y < map.getLenghtField(x); y++) {
+                if (Objects.equals(map.getElementField(x, y), "q")) return;
             }
         }
-        if (!CheckApple) {
-            if (snake.getB() == b1 && snake.getG() == g1) {
-                CheckApple = true;
-                snake.IncreaseLenghtSnake();
+        snake.IncreaseLenghtSnake();
+        while (true) {
+            b1 = 2 + (int) (Math.random() * 12);
+            g1 = 2 + (int) (Math.random() * 32);
+            if (!Objects.equals(map.getElementField(b1, g1), "o")) {
+                if ((g1 % 2) == 0) {
+                    map.setElementField(b1, g1, "q");
+                    return;
+                }
             }
         }
     }
