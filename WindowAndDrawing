@@ -11,6 +11,10 @@ import java.awt.event.KeyListener;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class WindowAndDrawing {
+    private int Key = 38;
+    int getKey () {
+        return Key;
+    }
     JTextPane jTextPane;
     JPanel jPanel;
     JFrame frame = new JFrame("Snake");
@@ -22,10 +26,10 @@ public class WindowAndDrawing {
     }
     WindowAndDrawing () {
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setLocation(450, 230);
         frame.setSize(400, 300);
         frame.setVisible(true);
         jTextPane = new JTextPane();
-        jTextPane.setEditable(false);
         jPanel = new JPanel();
         jPanel.add(jTextPane);
         frame.add(jPanel);
@@ -34,9 +38,35 @@ public class WindowAndDrawing {
             public void keyTyped(KeyEvent e) {}
             @Override
             public void keyPressed(KeyEvent e) {
-                Main.game.setKey(e.getKeyCode());
+                Key = e.getKeyCode();
             }
             @Override public void keyReleased(KeyEvent e) {}});
+    }
+    int i;
+    void setI(int b) {i = b;}
+    void EndSplashScreen() {
+        frame.setVisible(false);
+        frame = new JFrame("End?");
+        frame.setLocation(450, 230);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setVisible(true);
+        jTextPane = new JTextPane();
+        jPanel = new JPanel();
+        JButton jButton = new JButton("Ещё раз?");
+        JButton jButton1 = new JButton("Я всё(");
+        jPanel.add(jTextPane);
+        frame.add(jPanel);
+        jPanel.add(jButton);
+        jPanel.add(jButton1);
+        frame.add(jPanel);
+        appendToPane(jTextPane,"Ты проиграл!", Color.BLACK);
+        jButton.addActionListener(e -> setI(1));
+        jButton1.addActionListener(e -> setI(-1));
+        while (i != 1) {
+            if (i == -1) System.exit(0);
+        }
+        frame.setVisible(false);
     }
     void appendToPane(JTextPane tp, String msg, Color c)
     {
