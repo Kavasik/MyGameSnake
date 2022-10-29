@@ -26,7 +26,7 @@ void start() {
                 } catch (Throwable exc) {
                     return;
                 }
-                snake.addElementSnake();
+                snake.MoveTheSnake();
                 Apple();
                 map.MapDraw();
                 try {
@@ -61,7 +61,7 @@ void start() {
                 if (Objects.equals(map.getElementField(x, y), "q")) return;
             }
         }
-        snake.IncreaseLenghtSnake();
+        snake.addElementSnake();
         while (true) {
             b1 = 2 + (int) (Math.random() * 12);
             g1 = 2 + (int) (Math.random() * 32);
