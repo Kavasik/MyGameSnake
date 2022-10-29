@@ -4,16 +4,7 @@ public class Game {
     WindowAndDrawing windowAndDrawing;
     Map map;
     Snake snake;
-    private int Key;
     private int b1,g1;
-    void setKey(int key) {
-        switch (key) {
-            case 37: if(Key == 39) return; else Key = key; break;
-            case 38: if(Key == 40) return; else Key = key; break;
-            case 39: if(Key == 37) return; else Key = key; break;
-            case 40: if(Key == 38) return; else Key = key; break;
-        }
-    }
 boolean SnakePositionCheck () {
     if (snake.getB() == 0 || snake.getB() == 14) return false;
     return snake.getG() > 1 && snake.getG() < 33;
@@ -24,13 +15,12 @@ void start() {
             map = new Map(windowAndDrawing);
             snake = new Snake(map);
             while (SnakePositionCheck()) {
-                setKey(windowAndDrawing.getKey());
                 try {
-                    switch (Key) {
-                        case 37 -> left();
-                        case 38 -> up();
-                        case 39 -> right();
-                        case 40 -> down();
+                    switch (windowAndDrawing.getKey(1)) {
+                        case 37: if(windowAndDrawing.getKey(0) != 39 && windowAndDrawing.getKey(1) != windowAndDrawing.getKey(0)) left(); else right(); break;
+                        case 38: if(windowAndDrawing.getKey(0) != 40 && windowAndDrawing.getKey(1) != windowAndDrawing.getKey(0)) up(); else down(); break;
+                        case 39: if(windowAndDrawing.getKey(0) != 37 && windowAndDrawing.getKey(1) != windowAndDrawing.getKey(0)) right(); else left(); break;
+                        case 40: if(windowAndDrawing.getKey(0) != 38 && windowAndDrawing.getKey(1) != windowAndDrawing.getKey(0)) down(); else up(); break;
                     }
 
                 } catch (Throwable exc) {
