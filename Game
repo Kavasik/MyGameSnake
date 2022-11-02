@@ -4,8 +4,8 @@ public class Game {
     WindowAndDrawing windowAndDrawing;
     Map map;
     Snake snake;
-    private int b1,g1;
-boolean SnakePositionCheck () {
+
+    boolean SnakePositionCheck () {
     if (snake.getB() == 0 || snake.getB() == 14) return false;
     return snake.getG() > 1 && snake.getG() < 33;
 }
@@ -30,7 +30,7 @@ void start() {
                 Apple();
                 map.MapDraw();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(450);
                 } catch (Throwable exc) {
                     System.out.println("Ooooops, we have the problem)");
                 }
@@ -63,8 +63,8 @@ void start() {
         }
         snake.addElementSnake();
         while (true) {
-            b1 = 2 + (int) (Math.random() * 12);
-            g1 = 2 + (int) (Math.random() * 32);
+            int b1 = 2 + (int) (Math.random() * 12);
+            int g1 = 2 + (int) (Math.random() * 32);
             if (!Objects.equals(map.getElementField(b1, g1), "o")) {
                 if ((g1 % 2) == 0) {
                     map.setElementField(b1, g1, "q");
