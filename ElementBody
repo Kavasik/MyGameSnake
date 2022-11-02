@@ -1,12 +1,7 @@
 public class ElementBody {
     int b,g;
-    int Count;
-    ElementBody (int h, int k, int Count) {
+    ElementBody (int h, int k) {
         b = h;
         g = k;
-        this.Count = Count;
-    }
-    boolean DeleteElement () {
-        return Count == 0;
     }
 }
